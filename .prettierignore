@@ -1,0 +1,5 @@
+build
+src/local_modules
+node_modules
+.git
+.vscode
