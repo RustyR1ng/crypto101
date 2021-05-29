@@ -1,6 +1,20 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  p r3444
+	.CTA-page.content
+		.CTA-box
+			.logo-name
+				.logo-name__logo
+				.logo-name__name Encryptor
+			a.CTA-box__button.btn(href="#shifr-page") Начать шифровать
+
+	.shifr-page.content#shifr-page
+		form.shifr-box(method="post", action="https://httpbin.org/post", enctype="multipart/form-data")
+			select.shifr-box__select.select.btn
+				option(value="-1") Выберите метод шифрования
+			input(type="file", name="file")
+			textarea.shifr-box__text.textarea(name="text")
+			.shifr-box__key.input
+				label(for="key") Ключ
+				input(type="text" id="key")
+			button.shifr-box__start-button.btn(type="submit") Зашифровать
