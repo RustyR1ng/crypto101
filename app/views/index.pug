@@ -9,12 +9,14 @@ block content
 			a.CTA-box__button.btn(href="#shifr-page") Начать шифровать
 
 	.shifr-page.content#shifr-page
-		form.shifr-box(method="post", action="https://httpbin.org/post", enctype="multipart/form-data")
-			select.shifr-box__select.select.btn
+		form.shifr-box(method="post", action="/", enctype="multipart/form-data")
+			select(name="enc_type" id="enc_type").shifr-box__select.select.btn
 				option(value="-1") Выберите метод шифрования
-			input(type="file", name="file")
-			textarea.shifr-box__text.textarea(name="text")
+				for t in types
+					option(value=t.key)=t.text
+			input(type="file" accept=".png,.txt" name="asset" id="asset")
+			textarea.shifr-box__text.textarea(name="msg" id="msg")
 			.shifr-box__key.input
 				label(for="key") Ключ
-				input(type="text" id="key")
+				input(type="text" name="key" id="key")
 			button.shifr-box__start-button.btn(type="submit") Зашифровать
