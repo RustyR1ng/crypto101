@@ -1,5 +1,7 @@
 :root {
 	--black: #1a1a1a;
+	--black700: rgba(54, 54, 54, 1);
+	--black600: rgba(88, 88, 88, 1);
 	--white: #ffffff;
 	--accent: #00ff97;
 	--btn-text: rgba(26, 26, 26, 0.8);
@@ -22,7 +24,9 @@ body {
 	min-height: 100vh;
 	padding: 0;
 	margin: 0;
-	font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+	font: 18px 'Lucida Grande', Helvetica, Arial, sans-serif;
+	color: var(--white);
+	line-height: 130%;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -34,16 +38,25 @@ body {
 }
 .logo-name__logo {
 	background-color: var(--accent);
-	width: 80px;
-	height: 80px;
+	width: 60px;
+	height: 60px;
+	border-radius: 9999px;
+	margin-right: 20px;
 }
 
 .logo-name__name {
 	font-size: var(--h1);
+	line-height: 117.55px;
 	color: var(--white);
 }
 .CTA-box__button {
 	margin-top: 24px;
+}
+.CTA-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 a {
@@ -60,6 +73,9 @@ a {
 	flex-direction: column;
 }
 .btn {
+	cursor: pointer;
+
+	display: inline-block;
 	font-size: 1rem;
 	font-style: normal;
 	font-weight: 600;
@@ -72,6 +88,8 @@ a {
 
 	border-radius: 220px;
 	padding: 9px 29px 11px 29px;
+
+	transition: 0.5s;
 }
 
 .shifr-box {
@@ -85,10 +103,17 @@ a {
 	margin-bottom: 24px;
 }
 .textarea {
-	background: #363636;
+	color: var(--white);
+	font-size: 1rem;
+	line-height: 130%;
+	background: var(--black700);
 	border-radius: 24px;
 	border: transparent;
+	padding: 24px 36px;
 	min-height: 100px;
+}
+.textarea::placeholder {
+	color: var(--black600);
 }
 .shifr-box__text {
 	max-width: 100%;
@@ -108,4 +133,44 @@ a {
 
 .content {
 	padding: 0 30vw;
+}
+
+.form-row {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.shifr-box__key {
+	display: flex;
+	width: 60%;
+	height: 100%;
+}
+.shifr-box__key label {
+	border: transparent;
+	box-shadow: 0 0 0 1px var(--accent);
+	font-size: 1rem;
+	border-radius: 8888px;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 24px 1px;
+	color: var(--accent);
+}
+.shifr-box__key input {
+	background-color: transparent;
+	border: 0;
+	padding: 0 24px 1px;
+	width: 100%;
+	color: var(--white);
+	font-size: 1rem;
+	line-height: inherit;
+}
+
+label.file-btn > input {
+	display: none;
+}
+
+.btn:hover {
+	box-shadow: 0 2px var(--white);
 }
