@@ -1,16 +1,18 @@
-var express = require('express')
+const express = require('express')
 const { redirect } = require('express/lib/response')
-var router = express.Router()
-var http = require('http'),
+const router = express.Router()
+const http = require('http'),
     formidable = require('formidable'),
     util = require('util')
 
 const fs = require('fs')
+const Crypto = require('crypto')
 const tempFolder = './temp/'
 
 const encDir = '../enc_types/'
-const types = require(encDir + 'types'),
-    stegoImg = require(encDir + 'stego/img')
+const types = require(encDir + 'types'), stegoImg = require(encDir + 'helper/img');
+
+const AES = require(encDir + 'helper/AES')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -34,9 +36,16 @@ router.post('/', function (req, res, next) {
         switch (encType) {
             case types.stegoImg.key: {
                 img = stegoImg.encrypt(files.asset.path, msg)
-                console.log(img)
+                console.log(img) 
                 enc_img = sendFile(res, img, 'stegoImg', 'png')
                 console.log(stegoImg.decrypt(enc_img))
+                break
+            }
+            case types.cryptoAES.key: {
+                cipher = AES.enAES(msg, key)
+                cipher_file = sendFile(res,cipher,'cryptoAES','txt')
+                Mydecipher = AES.decAES(cipher,key)
+                console.log(Mydecipher)
                 break
             }
             default: {
