@@ -14,13 +14,16 @@ block content
 				option(value="-1") Выберите метод шифрования
 				for t in types
 					option(value=t.key)=t.text
-			label.btn.file-btn Выберите файл
-				input(type="file" accept=".png, .txt, .wav" name="asset" id="asset" )
+
 			textarea.shifr-box__text.textarea(name="msg" id="msg" placeholder="Ваше сообщение")
-			.form-row 
+			.form-row
 				.shifr-box__key.input
 					label(for="key") Ключ
 					input(type="text" name="key" id="key")
-				button.shifr-box__start-button.btn(type="submit") Зашифровать
+				label.btn.btn_outlined.file-btn Выберите файл
+					input(type="file" accept=".png, .txt, .wav" name="asset" id="asset" )
+			.form-row
+				button.shifr-box__start-button.btn(type="submit") Расшифровать
+				button.shifr-box__start-button.btn(type="submit" name="encrypt" value="1") Зашифровать
 
 

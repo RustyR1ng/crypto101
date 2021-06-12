@@ -74,6 +74,7 @@ a {
 }
 .btn {
 	cursor: pointer;
+	white-space: nowrap;
 
 	display: inline-block;
 	font-size: 1rem;
@@ -81,7 +82,7 @@ a {
 	font-weight: 600;
 	line-height: 23px;
 	letter-spacing: 0em;
-	text-align: left;
+	text-align: center;
 
 	background-color: var(--accent);
 	color: var(--btn-text);
@@ -143,8 +144,7 @@ a {
 
 .shifr-box__key {
 	display: flex;
-	width: 60%;
-	height: 100%;
+	margin-right: 24px;
 }
 .shifr-box__key label {
 	border: transparent;
@@ -160,7 +160,7 @@ a {
 .shifr-box__key input {
 	background-color: transparent;
 	border: 0;
-	padding: 0 24px 1px;
+	padding: 9px 29px 11px 29px;
 	width: 100%;
 	color: var(--white);
 	font-size: 1rem;
@@ -170,7 +170,11 @@ a {
 label.file-btn > input {
 	display: none;
 }
-
+.btn_outlined {
+	background-color: transparent;
+	border: 1px solid var(--accent);
+	color: var(--accent);
+}
 .btn:hover {
 	box-shadow: 0 2px var(--white);
 }
