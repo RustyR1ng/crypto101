@@ -15,9 +15,9 @@ block content
 				for t in types
 					option(value=t.key)=t.text
 			label.btn.file-btn Выберите файл
-				input(type="file" accept=".png, .txt" name="asset" id="asset" )
+				input(type="file" accept=".png, .txt, .wav" name="asset" id="asset" )
 			textarea.shifr-box__text.textarea(name="msg" id="msg" placeholder="Ваше сообщение")
-			.form-row
+			.form-row 
 				.shifr-box__key.input
 					label(for="key") Ключ
 					input(type="text" name="key" id="key")

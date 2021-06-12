@@ -17,7 +17,8 @@
 		"node-rsa": "^1.1.1",
 		"pug": "2.0.0-beta11",
 		"steggy": "^2.0.1",
-		"stegonaut": "github:knez/stegonaut"
+		"stegonaut": "github:knez/stegonaut",
+		"wavefile": "^11.0.0"
 	},
 	"devDependencies": {
 		"browser-sync": "^2.26.14",

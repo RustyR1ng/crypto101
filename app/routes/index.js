@@ -1,18 +1,18 @@
 const express = require('express')
-const { redirect } = require('express/lib/response')
+const { redirect, sendfile } = require('express/lib/response')
 const router = express.Router()
 const http = require('http'),
     formidable = require('formidable'),
-    util = require('util')
+    util = require('util'),
+    fs = require('fs')
 
-const fs = require('fs')
-const Crypto = require('crypto')
 const tempFolder = './temp/'
-
 const encDir = '../enc_types/'
-const types = require(encDir + 'types'), stegoImg = require(encDir + 'helper/img');
+const types = require(encDir + 'types') 
 
-const AES = require(encDir + 'helper/AES')
+const stegoImg = require(encDir + 'helper/img'),
+    AES = require(encDir + 'helper/AES'),
+    WAV = require(encDir + 'helper/WAV')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -31,7 +31,7 @@ router.post('/', function (req, res, next) {
 
         if (!msg) {
             console.log(msg)
-            return res.redirect('/#shifr-page')
+            return res.redirect('/#shifr-page') 
         }
         switch (encType) {
             case types.stegoImg.key: {
@@ -47,6 +47,17 @@ router.post('/', function (req, res, next) {
                 Mydecipher = AES.decAES(cipher,key)
                 console.log(Mydecipher)
                 break
+            }
+            case types.stegoWAV.key: {
+                wav = WAV.enWAV(msg, files.asset.path)
+                console.log(wav)
+                enc_wav = sendFile(res, wav, 'stegoWAV', 'wav')
+                /* dec_wav = WAV.decWAV(key, files.asset.path)
+                console.log(dec_wav) */
+                break
+            }
+            case types.cryptoDES.key:{
+                
             }
             default: {
                 console.log(encType)
