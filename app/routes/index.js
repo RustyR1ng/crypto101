@@ -14,7 +14,9 @@ const types = require(encDir + 'types')
 
 const stegoImg = require(encDir + 'helper/img'),
     AES = require(encDir + 'helper/AES'),
-    WAV = require(encDir + 'helper/WAV')
+    WAV = require(encDir + 'helper/WAV'),
+    MP3 = require(encDir + 'helper/MP3'),
+    CHA = require(encDir + 'helper/CHACHA20')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -57,14 +59,23 @@ router.post('/', function (req, res, next) {
                 break
             }
 
-            case types.cryptoDES.key: {
-                cryptoDESHandle(res, crypt, msg, key)
+            case types.cryptoCHA.key: {
+                try {
+                    cryptoCHAHandle(res, crypt, msg, key)
+                } catch (error) {
+                    console.log(error)
+                    res.redirect('/#shifr-page')
+                }
+                break
+            }
+
+            case types.stegoMP3.key: {
+                stegoMP3Handle(res, crypt, msg, asset)
                 break
             }
 
             default: {
                 console.log('Enc Type', encType)
-
                 res.redirect('/#shifr-page')
             }
         }
@@ -74,42 +85,85 @@ router.post('/', function (req, res, next) {
 function stegoImgHandle(res, sw, msg, asset) {
     console.log('StegoImg')
     if (!asset) return
+    let format, name
     if (sw) {
         resImg = stegoImg.encrypt(asset.path, msg)
+        format = 'png'
+        name = 'stegoImg'
     } else {
         resImg = stegoImg.decrypt(asset.path)
+        format = 'txt'
+        name = 'decryptImg'
     }
-    file = sendFile(res, resImg, 'stegoImg', 'png')
+    file = sendFile(res, resImg, name, format)
     console.log(resImg, file)
 }
 function stegoWAVHandle(res, sw, msg, asset) {
     console.log('WAV')
+    let format, name 
     if (!asset) return
     if (sw) {
         resWav = WAV.enWAV(msg, asset.path)
+        format = 'wav'
+        name = 'stegoWAV'
     } else {
         resWav = WAV.decWAV(asset.path)
+        format = 'txt'
+        name = 'decryptWAV'
     }
-    file = sendFile(res, resWav, 'stegoWAV', 'wav')
+    file = sendFile(res, resWav, name, format)
+    console.log(resWav, file)
+}
+
+function stegoMP3Handle(res, sw, msg, asset){
+    console.log('MP3')
+    let format, name 
+    if (!asset) return
+    if (sw) {
+        resWav = MP3.enMP3(msg, asset.path)
+        format = 'mp3'
+        name = 'stegoMP3'
+    } else {
+        resWav = MP3.decMP3(asset.path)
+        format = 'txt'
+        name = 'decryptMP3'
+    }
+    file = sendFile(res, resWav, name, format)
     console.log(resWav, file)
 }
 
 function cryptoAESHandle(res, sw, msg, key) {
     console.log('AES')
+    let name
     if (sw) {
         console.log('Enc')
         resMsg = AES.enAES(msg, key)
+        name = 'cryptoAES'
     } else {
         console.log('Dec')
         resMsg = AES.decAES(msg, key)
+        name = 'decryptAES'
     }
 
-    file = sendFile(res, resMsg, 'cryptoAES', 'txt')
+    file = sendFile(res, resMsg, name, 'txt')
     console.log(resMsg, file)
 }
 
-function cryptoDESHandle(res, sw, msg, key) {
+function cryptoCHAHandle(res, sw, msg, key) {
     console.log('DES')
+    let name
+    if (sw) {
+        console.log('Enc')
+        resMsg = CHA.enCHA(msg, key)
+        name = 'cryptoCHA'
+    } else {
+        console.log('Dec')
+        resMsg = CHA.decCHA(msg, key)
+        name = 'decryptCHA'
+    }
+
+    file = sendFile(res, resMsg, name, 'txt')
+    console.log(resMsg, file)
 }
 
 function sendFile(res, file, name, ext) {
